@@ -1,0 +1,10 @@
+{
+  "background_color": "#ffffff",
+  "description": "MidiController",
+  "display": "standalone",
+  "name": "MidiController",
+  "short_name": "MidiController",
+  "start_url": "/index.html",
+  "theme_color": "#ffffff",
+  "scope": "/"
+}
