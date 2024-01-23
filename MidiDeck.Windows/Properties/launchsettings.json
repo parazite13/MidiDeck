@@ -1,0 +1,10 @@
+{
+	"profiles": {
+		"MidiDeck.Windows (Unpackaged)": {
+			"commandName": "Project"
+		},
+		"MidiDeck.Windows (Package)": {
+			"commandName": "MsixPackage"
+		}
+	}
+}

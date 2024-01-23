@@ -1,0 +1,10 @@
+{
+  "background_color": "#ffffff",
+  "description": "MidiDeck",
+  "display": "standalone",
+  "name": "MidiDeck",
+  "short_name": "MidiDeck",
+  "start_url": "/index.html",
+  "theme_color": "#ffffff",
+  "scope": "/"
+}

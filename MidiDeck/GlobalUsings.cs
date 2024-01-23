@@ -1,0 +1,13 @@
+global using System.Windows.Input;
+global using CommunityToolkit.Mvvm.ComponentModel;
+global using CommunityToolkit.Mvvm.Input;
+global using Microsoft.Extensions.DependencyInjection;
+global using Microsoft.Extensions.Hosting;
+global using Microsoft.Extensions.Localization;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.UI.Xaml;
+global using Microsoft.UI.Xaml.Controls;
+global using MidiDeck.Business.Models;
+global using MidiDeck.Presentation;
+global using Uno.UI;
+global using Windows.Storage;
