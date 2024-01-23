@@ -31,4 +31,12 @@ public sealed partial class MainPage : Page
     {
 
     }
+
+    private async void Page_Loaded(object sender, RoutedEventArgs e)
+    {
+        if(DataContext is MainViewModel viewModel)
+        {
+            await viewModel.Init();
+        }
+    }
 }

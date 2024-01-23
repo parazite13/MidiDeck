@@ -17,7 +17,7 @@
     </Grid.RowDefinitions>
 
 
-    <utu:NavigationBar Content="Pad Setting">
+    <utu:NavigationBar Content="Pad Settings">
       <utu:NavigationBar.MainCommand>
         <AppBarButton Icon="Back" Label="Back" uen:Navigation.Request="-"/>
       </utu:NavigationBar.MainCommand>

@@ -8,7 +8,8 @@
       xmlns:win="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       NavigationCacheMode="Required"
       xmlns:controls="using:CommunityToolkit.WinUI.UI.Controls"
-      Background="{ThemeResource BackgroundBrush}">
+      Background="{ThemeResource BackgroundBrush}"
+      Loaded="Page_Loaded">
 
   <Grid utu:SafeArea.Insets="VisibleBounds">
     <Grid.RowDefinitions>

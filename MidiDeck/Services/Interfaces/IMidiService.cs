@@ -1,3 +1,4 @@
+using MidiDeck.Services.Models;
 using Windows.Devices.Enumeration;
 using Windows.Devices.Midi;
 
@@ -7,5 +8,12 @@ public interface IMidiService
 {
     event Windows.Foundation.TypedEventHandler<MidiInPort, MidiMessageReceivedEventArgs> OnMidiInput;
 
-    Task StartMidiInputWatcherAsync(DeviceInformation midiDevice);
+    IReadOnlyCollection<MidiDevice> MidiInWatchedDevices { get; }
+    IReadOnlyCollection<MidiDevice> MidiOutWatchedDevices { get; }
+
+    Task<IReadOnlyCollection<MidiDevice>> GetAvailableInputDevices();
+    Task<IReadOnlyCollection<MidiDevice>> GetAvailableOutputDevices();
+
+    Task StartMidiInputWatcherAsync(MidiDevice midiDevice);
+    Task StopMidiInputWatcherAsync(MidiDevice midiDevice);
 }

@@ -7,12 +7,55 @@
       xmlns:uen="using:Uno.Extensions.Navigation.UI"
       xmlns:utu="using:Uno.Toolkit.UI"
       xmlns:um="using:Uno.Material"
-      Background="{ThemeResource BackgroundBrush}">
+      Background="{ThemeResource BackgroundBrush}"
+      Loaded="Page_Loaded">
 
   <Grid>
-    <TextBlock Text="Flyout content"
-                   FontSize="32"
-                   HorizontalAlignment="Center"
-                   VerticalAlignment="Center" />
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="300"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <utu:NavigationBar Content="Midi Settings">
+      <utu:NavigationBar.MainCommand>
+        <AppBarButton Icon="Back" Label="Back" uen:Navigation.Request="-"/>
+      </utu:NavigationBar.MainCommand>
+    </utu:NavigationBar>
+
+    <StackPanel Orientation="Horizontal" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top">
+      <ScrollViewer>
+        <ListView
+          x:Name="MidiInputs"
+            ItemsSource="{Binding MidiInputs}">
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <StackPanel Orientation="Horizontal"
+                         
+                          Padding="10">
+                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding Name}" />
+                <CheckBox HorizontalAlignment="Right" Command="{Binding ElementName=MidiInputs, Path=DataContext.MidiInputCheckCommand}" CommandParameter="{Binding}" IsChecked="{Binding IsEnabled, Mode=TwoWay}"/>
+              </StackPanel>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+      </ScrollViewer>
+
+      <ScrollViewer>
+        <ListView
+     ItemsSource="{Binding MidiOutputs}">
+          <ListView.ItemTemplate>
+            <DataTemplate>
+              <StackPanel Orientation="Horizontal"
+                  
+                   Padding="10">
+                <TextBlock HorizontalAlignment="Left" VerticalAlignment="Center" Text="{Binding Name}" />
+                <CheckBox HorizontalAlignment="Right" />
+              </StackPanel>
+            </DataTemplate>
+          </ListView.ItemTemplate>
+        </ListView>
+      </ScrollViewer>
+    </StackPanel>
   </Grid>
 </Page>

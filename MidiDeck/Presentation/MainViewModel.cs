@@ -77,15 +77,35 @@ public partial class MainViewModel : ObservableObject
         midiService.OnMidiInput -= OnMidiInput;
     }
 
+    public Task Init()
+    {
+        return Task.WhenAll(new List<Task>()
+        {
+            InitMidiDevices(),
+            InitSounds()
+        });
+    }
+
     private async Task InitMidiDevices()
     {
-        var midiInputQueryString = MidiInPort.GetDeviceSelector();
-        var devices = await DeviceInformation.FindAllAsync(midiInputQueryString);
-        if(devices.Any(d => d.Name == "USB MIDI")) 
+        foreach(var device in midiService.MidiInWatchedDevices)
         {
-            var device = devices.First(d => d.Name == "USB MIDI");
-            await midiService.StartMidiInputWatcherAsync(device);
+            await midiService.StopMidiInputWatcherAsync(device);
         }
+
+        var devices = await midiService.GetAvailableInputDevices();
+        var midiDevices = settings.Get<string[]>("MidiInputs");
+        if(midiDevices is not null)
+        {
+            foreach(var midiDevice in midiDevices)
+            {
+                var device = devices.FirstOrDefault(d => d.Id == midiDevice);
+                if (device is not null)
+                {
+                    await midiService.StartMidiInputWatcherAsync(device);
+                }
+            }
+        }        
     }
 
     private async Task InitSounds()
@@ -105,13 +125,16 @@ public partial class MainViewModel : ObservableObject
                     sounds.Clear();
 
                     var loadingTasks = new Dictionary<MidiPad, Task<Sound>>();
-                    foreach (var midiPad in CurrentLayout.PadsList)
+                    if(CurrentLayout is not null)
                     {
-                        loadingTasks.Add(midiPad, soundService.LoadSoundAsync(midiPad.Path));
-                    }
-                    foreach (var task in loadingTasks)
-                    {
-                        sounds.Add(task.Key, await task.Value);
+                        foreach (var midiPad in CurrentLayout.PadsList)
+                        {
+                            loadingTasks.Add(midiPad, soundService.LoadSoundAsync(midiPad.Path));
+                        }
+                        foreach (var task in loadingTasks)
+                        {
+                            sounds.Add(task.Key, await task.Value);
+                        }
                     }
                 });
             }
@@ -130,7 +153,7 @@ public partial class MainViewModel : ObservableObject
     private async Task NewLayout()
     {
         CurrentLayout = new MidiLayout(4, 4);
-        await InitSounds();
+        await Init();
     }
 
     private async Task OpenLayout()
@@ -150,7 +173,7 @@ public partial class MainViewModel : ObservableObject
             {
                 var content = await FileIO.ReadTextAsync(pickedFile);
                 CurrentLayout = JsonSerializer.Deserialize<MidiLayout>(content);
-                await InitSounds();
+                await Init();
             }
             catch(Exception e)
             {
@@ -202,7 +225,7 @@ public partial class MainViewModel : ObservableObject
             if((await navigationResult.Result).IsSome(out var layout))
             {
                 CurrentLayout = new MidiLayout(layout.Rows, layout.Columns);
-                await InitSounds();
+                await Init();
             }
         }
     }
@@ -216,10 +239,13 @@ public partial class MainViewModel : ObservableObject
     {
         if (args.Message is MidiNoteOnMessage midiOn)
         {
-            var tappedPad = CurrentLayout.PadsList.FirstOrDefault(p => p.Note == midiOn.Note);
-            if (tappedPad is not null)
+            if(CurrentLayout is not null)
             {
-                PadClick(tappedPad);
+                var tappedPad = CurrentLayout.PadsList.FirstOrDefault(p => p.Note == midiOn.Note);
+                if (tappedPad is not null)
+                {
+                    PadClick(tappedPad);
+                }
             }
         }
     }
