@@ -141,7 +141,7 @@ public partial class MainViewModel : ObservableObject
             catch
             {
                 // TODO
-                throw;
+               // throw;
             }
             finally
             {
@@ -219,15 +219,7 @@ public partial class MainViewModel : ObservableObject
 
     private async Task GoToLayoutSettings()
     {
-        var navigationResult = await navigator.NavigateViewModelForResultAsync<Size>(this, typeof(LayoutSettingsViewModel), Qualifiers.Dialog, data: new Size(CurrentLayout.Size.Rows, CurrentLayout.Size.Columns));
-        if (navigationResult is not null)
-        {
-            if((await navigationResult.Result).IsSome(out var layout))
-            {
-                CurrentLayout = new MidiLayout(layout.Rows, layout.Columns);
-                await Init();
-            }
-        }
+        await navigator.NavigateViewModelAsync<LayoutSettingsViewModel>(this, data: CurrentLayout.Size);
     }
 
     private async Task GoToMidiSettings()
@@ -254,7 +246,7 @@ public partial class MainViewModel : ObservableObject
     {
         if(dataContext is MidiPad pad)
         {
-            soundService.PlaySound(sounds[pad], pad.Volume);
+            soundService.PlaySound(sounds[pad], pad.Volume / 100d);
         }
     }
 

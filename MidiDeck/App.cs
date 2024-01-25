@@ -79,9 +79,9 @@ public class App : Application
         views.Register(
             new ViewMap(ViewModel: typeof(ShellViewModel)),
             new ViewMap<MainPage, MainViewModel>(),
-            new ViewMap<LayoutSettingsPage, LayoutSettingsViewModel>(ResultData: typeof(Size)),
+            new ViewMap<LayoutSettingsPage, LayoutSettingsViewModel>(Data: new DataMap<Size>()),
             new ViewMap<MidiSettingsPage, MidiSettingsViewModel>(),
-            new ViewMap<PadSettingsPage, PadSettingsViewModel>()
+            new ViewMap<PadSettingsPage, PadSettingsViewModel>(Data: new DataMap<MidiPad>())
         );
 
         routes.Register(

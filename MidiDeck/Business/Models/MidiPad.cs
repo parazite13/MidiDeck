@@ -6,11 +6,11 @@ namespace MidiDeck.Business.Models;
 
 public class MidiPad
 {
-    public string Name { get; set; }
+    public string Name { get; set; } = "Test";
 
     public byte Note { get; set; }
 
-    public double Volume { get; set; } = 0.5;
+    public double Volume { get; set; } = 50;
 
-    public string Path => @$"E:\Data\Alexandre\Music\Pads\Robot Rock\{Math.Min(Note-35, 15)}.wav";
+    public string Path { get; set; }
 }

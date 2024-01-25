@@ -1,3 +1,13 @@
 namespace MidiDeck.Business.Models;
 
-public record Size (int Rows, int Columns);
+public class Size
+{
+    public Size(int rows, int columns)
+    {
+        Rows = rows;
+        Columns = columns;
+    }
+
+    public int Rows { get; set; }
+    public int Columns { get; set; }
+}

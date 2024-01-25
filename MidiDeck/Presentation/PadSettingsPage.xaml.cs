@@ -25,16 +25,4 @@ public sealed partial class PadSettingsPage : Page
     {
         this.InitializeComponent();
     }
-
-    protected override void OnNavigatedTo(NavigationEventArgs e)
-    {
-        base.OnNavigatedTo(e);
-        if(DataContext is PadSettingsViewModel viewModel)
-        {
-            if(e.Parameter is MidiPad pad)
-            {
-                viewModel.Pad = pad;
-            }
-        }
-    }
 }

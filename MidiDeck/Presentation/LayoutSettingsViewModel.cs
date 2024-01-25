@@ -12,27 +12,33 @@ public partial class LayoutSettingsViewModel : ObservableObject
     private readonly IStringLocalizer localizer;
     private readonly INavigator navigator;
 
+    private Size initialSize;
+
     public LayoutSettingsViewModel(
+        Size size,
         IStringLocalizer localizer,
         INavigator navigator)
     {
         this.navigator = navigator;
         this.localizer = localizer;    
-
+        
         ApplyCommand = new AsyncRelayCommand(Apply);
         CancelCommand = new AsyncRelayCommand(Cancel);
 
-        Size = new Size(4, 4);
+        initialSize = new Size(size.Rows, size.Columns);
+        Size = size;
     }
 
 
     private async Task Apply()
     {
-        await navigator.NavigateBackWithResultAsync(this, qualifier: Qualifiers.NavigateBack, Option.Some(Size));
+        await navigator.NavigateBackAsync(this);
     }
 
     private async Task Cancel()
     {
-        await navigator.NavigateBackWithResultAsync(this, qualifier: Qualifiers.NavigateBack);
+        Size.Rows = initialSize.Rows;
+        Size.Columns = initialSize.Columns;
+        await navigator.NavigateBackAsync(this);
     }
 }

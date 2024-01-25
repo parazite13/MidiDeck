@@ -23,9 +23,14 @@
       </utu:NavigationBar.MainCommand>
     </utu:NavigationBar>
 
-    <StackPanel Orientation="Vertical" Grid.Row="2">
+    <StackPanel Orientation="Vertical" Grid.Row="1">
+      <TextBox Text="{Binding Pad.Name, Mode=TwoWay}"/>
       <Slider Value="{Binding Pad.Volume, Mode=TwoWay}"/>
-
+      <StackPanel Orientation="Horizontal">
+        <TextBlock Text="{Binding Pad.Path}"/>
+        <Button Content="Browse" Command="{Binding BrowseFileCommand}"/>
+      </StackPanel>
+      
 
     </StackPanel>
 

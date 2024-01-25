@@ -1,4 +1,5 @@
 using Microsoft.UI.Xaml.Media.Imaging;
+using Microsoft.UI.Xaml.Navigation;
 using Windows.ApplicationModel.DataTransfer;
 
 
@@ -9,6 +10,18 @@ public sealed partial class MainPage : Page
     public MainPage()
     {
         this.InitializeComponent();
+    }
+
+    protected override void OnNavigatedTo(NavigationEventArgs e)
+    {
+        base.OnNavigatedTo(e);
+        if(DataContext is MainViewModel viewModel)
+        {
+            // Bindings.Update(); is preferrable but apparently not supported, so instead we are refreshing current layout like this
+            var temp = viewModel.CurrentLayout;
+            viewModel.CurrentLayout = null;
+            viewModel.CurrentLayout = temp;
+        }
     }
 
     private async void Button_Drop(object sender, DragEventArgs e)

@@ -9,7 +9,7 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
   <StackPanel Orientation="Vertical" Width="300" Height="200">
-    <NumberBox Header="Rows:" Margin="5" Value="{Binding Layout.Rows, Mode=TwoWay}" />
+    <NumberBox Header="Rows:" Margin="5" Value="{Binding Size.Rows, Mode=TwoWay}" />
     <NumberBox Header="Columns:" Margin="5" Value="{Binding Size.Columns, Mode=TwoWay}" />
     <StackPanel Orientation="Horizontal" Margin="5" HorizontalAlignment="Center">
       <Button HorizontalAlignment="Left" Content="Apply" Command="{Binding ApplyCommand}"/>
